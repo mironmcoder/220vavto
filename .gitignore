@@ -3,3 +3,5 @@ web/
 tmart-free/
 db.sqlite3
 .idea/
+vastatic/media/products/
+static/media/products/
