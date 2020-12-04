@@ -1,0 +1,103 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}<title>{{ cat_get.seo_title }}</title>{% endblock %}
+
+{% block page %}
+
+<!-- Start Bradcaump area -->
+<div class="ht__bradcaump__area" style="background: rgba(0, 0, 0, 0) url({% static "images/bg/2.jpg" %}) no-repeat scroll center center / cover ;">
+    <div class="ht__bradcaump__wrap">
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="bradcaump__inner text-center">
+                        <h2 class="bradcaump-title">Фильтр товаров</h2>
+                        <nav class="bradcaump-inner">
+                          <a class="breadcrumb-item" href="/">На главную страницу</a>
+                          <span class="brd-separetor">/</span>
+                          <span class="breadcrumb-item active">Фильтр товаров</span>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<section class="htc__product__area shop__page ptb--130 bg__white">
+    <div class="container">
+        <div class="htc__product__container">
+            <!-- Start Filter Menu -->
+            <div class="filter__wrap">
+                <div class="filter__cart">
+                    <div class="filter__cart__inner">
+                        <div class="filter__menu__close__btn">
+                            <a href=""><i class="zmdi zmdi-close"></i></a>
+                        </div>
+                        <div class="filter__content">
+                            <!-- Start Single Content -->
+                            <div class="fiter__content__inner">
+                                <div class="single__filter">
+                                    <h2>Сортировать</h2>
+                                    <ul class="filter__list">
+                                        <form method="get" action="{% url 'product_filter' %}">
+                                            {% for obj in product_filter_get_all %}
+                                                <div>
+                                                    <input type="checkbox" id="check-filter" name="f" value="{{ obj.slug }}">
+                                                    <label>{{ obj.title }}</label>
+                                                </div>
+                                            {% endfor %}
+                                                <div>
+                                                    <button type="submit">сортировать</button>
+                                                </div>
+                                        </form> 
+                                    </ul>
+                                </div>
+                            </div>
+                            <!-- End Single Content -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- End Filter Menu -->
+            <!-- End Product MEnu -->
+            <div class="row">
+                <div class="product__list another-product-style">
+                    <!-- Start Single Product -->
+                    {% for choice in product_obj %}
+                        <div class="col-md-3 single__pro col-lg-3 cat--{{ choice.category_id }} col-sm-4 col-xs-12">
+                            <div class="product foo">
+                                <div class="product__inner">
+                                    <div class="pro__thumb">
+                                        <a href="{% url 'product' choice.slug %}">
+                                            {% with choice.images_set.all|first as image_item %}
+                                                <img src="{{ image_item.img.url }}" alt="product images">
+                                            {% endwith %}
+                                        </a>
+                                    </div>
+                                    <div class="product__hover__info">
+                                        <ul class="product__action">
+                                            <li><a title="Добавить в корзину href="#"><span class="ti-shopping-cart"></span></a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="product__details">
+                                    <h2><a href="{% url 'product' choice.slug %}">{{ choice.title }}</a></h2>
+                                    <ul class="product__price">
+                                        <li class="old__price">&#8381;{{ choice.discount_price }}</li>
+                                        <li class="new__price">&#8381;{{ choice.price }}</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                    <!-- End Single Product -->
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
+{% endblock %}

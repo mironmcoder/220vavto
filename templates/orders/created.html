@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% load static %}
+{% block page %}
+<!-- Start Bradcaump area -->
+<div class="ht__bradcaump__area" style="background: rgba(0, 0, 0, 0) url({% static 'images/bg/2.jpg' %}) no-repeat scroll center center / cover ;">
+    <div class="ht__bradcaump__wrap">
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="bradcaump__inner text-center">
+                        <h1>Спасибо за заказ!</h1>
+					    <h3>Ваш заказ находится в обработке</h3>
+					    <h3>через некоторое время с вами свяжется менеджер</h3>
+					    <h3>Ваш номер заказа #{{ order.id }}</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End Bradcaump area -->
+{% endblock %}

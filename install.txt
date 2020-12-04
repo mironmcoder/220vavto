@@ -1,0 +1,6 @@
+pip install unidecode
+pip install django-autoslug
+pip install Pillow
+pip install django-ckeditor
+pip install django-simple-captcha
+pip install django-mptt

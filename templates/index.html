@@ -1,0 +1,135 @@
+{% extends "base.html" %}
+{% load static %}
+{% load mptt_tags %}
+	{% block page %}
+  
+        
+        <!-- Start Feature Product -->
+        <section class="categories-slider-area bg__white">
+            <div class="container">
+                <div class="row">
+                    <!-- Start Left Feature -->
+                    <div class="col-md-9 col-lg-9 col-sm-12 col-xs-12 float-left-style">
+                        <div class="baner-top">
+                            <img src="{% static 'media/images/slider/bg/1.png' %}" class="img-fluid" alt="Responsive image"> 
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-lg-3 hidden-xs hidden-sm float-right-style">
+                        <div class="categories-menu mrg-xs">
+                            <div class="category-heading">
+                               <h3>Каталог</h3>
+                            </div>
+                            <div class="category-menu-list">
+                                {% for cat,structure in cat|tree_info %}
+                                    {% if structure.new_level %}
+                                        <ul>
+                                            <li class="dropdown">
+                                                {% else %}
+                                            </li>
+                                            <li>
+                                                {% endif %}
+                                                    <a href="{% url 'catalog' cat.slug %}">{{ cat.title }}</a>
+                                                {% for level in structure.closed_levels %}
+                                            </li>
+                                        </ul>
+                                                {% endfor %}
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                    <!-- End Left Feature -->
+                </div>
+            </div>
+        </section>
+        <!-- End Feature Product -->
+        <!-- Start category menu -->
+        <section class="category-menu">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="category-menu-box  hidden-md hidden-lg hidden-sm ">
+                            <div class="category-heading">
+                               <h3 class="dropdown">Просмотр Каталога</h3>
+                            </div>
+                            <div id="category-menu-mobile"  class="category-menu-mobile">
+                                {% for cat,structure in cat|tree_info %}
+                                    {% if structure.new_level %}
+                                        <ul>
+                                            <li class="dropdown-mobile">
+                                                {% else %}
+                                            </li>
+                                            <li>
+                                                {% endif %}
+                                                    <a class="cl" href="{% url 'catalog' cat.slug %}">{{ cat.title }}</a>
+                                                {% for level in structure.closed_levels %}
+                                            </li>
+                                        </ul>
+                                                {% endfor %}
+                                {% endfor %}
+                            </div>
+                        </div>                 
+                    </div>
+                </div>
+            </div>
+        </section>  
+        <!-- End category menu -->
+        <!-- Start Our Product Area -->
+        <section class="htc__product__area ptb--130 bg__white">
+            <div class="container">
+                <div class="htc__product__container">
+                    <!-- Start Product MEnu -->
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="product__menu">
+                                <button data-filter="*"  class="is-checked">Все товары</button>
+                                {% for obj in category %}
+                                	<button data-filter=".cat--{{ obj.pk }}">{{ obj.title }}</button>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                    <!-- End Product MEnu -->
+                    <div class="row">
+                        <div class="product__list another-product-style">
+                            <!-- Start Single Product -->
+                            {% for product in object_list %}
+	                            <div class="col-md-3 single__pro col-lg-3 cat--{{ product.category_id }} col-sm-4 col-xs-12">
+	                                <div class="product foo">
+	                                    <div class="product__inner">
+	                                        <div class="pro__thumb">
+	                                            <a href="{% url 'product' product.slug %}">
+	                                               <img src="{{ product.image_url|default_if_none:'#' }}" alt="product images">
+	                                            </a>
+	                                        </div>
+	                                        
+	                                    </div>
+	                                    <div class="product__details">
+	                                        <h2><a href="{% url 'product' product.slug %}">{{ product.title }}</a></h2>
+	                                        <ul class="product__price">
+	                                            <li class="old__price">&#8381;{{ product.discount_price }}</li>
+	                                            <li class="new__price">&#8381;{{ product.price }}</li>
+	                                        </ul>
+	                                    </div>
+	                                </div>
+	                            </div>
+	                        {% endfor %}
+                            <!-- End Single Product -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- End Our Product Area -->
+        <div class="only-banner ptb--100 bg__white">
+            <div class="container">
+                <div class="only-banner-img">
+                    <a href="/"><img src="{% static "media/images/new-product/3.jpg" %}" alt="new product"></a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- END QUICKVIEW PRODUCT -->
+        
+{% endblock %}
+
+

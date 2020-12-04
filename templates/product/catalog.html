@@ -1,0 +1,135 @@
+{% extends "base.html" %}
+{% load static %}
+{% load mptt_tags %}
+{% block title %}<title>{{ category_get.seo_title }}</title>{% endblock %}
+
+{% block page %}
+
+<!-- Start Bradcaump area -->
+<div class="ht__bradcaump__area" style="background: rgba(0, 0, 0, 0) url({% static "media/images/bg/2.jpg" %}) no-repeat scroll center center / cover ;">
+    <div class="ht__bradcaump__wrap">
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="bradcaump__inner text-center">
+                        <h2 class="bradcaump-title">{{ category_get.h1 }} </h2>
+                        <nav class="bradcaump-inner">
+                          <a class="breadcrumb-item" href="/">Главная страница</a>
+                          {% for bc in breadcrumbs %}
+                            <span class="brd-separetor">/</span>
+                            <span class="breadcrumb-item active"><a href="{% url 'catalog' bc.slug %}">{{ bc.title }}</a></span>
+                          {% endfor %}
+                            <span class="brd-separetor">/</span>
+                            <span class="breadcrumb-item active"><a href="{% url 'catalog' category_get.slug %}"> {{ category_get.title }}</a></span>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<section class="htc__shop__sidebar bg__white ptb--120">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-3 col-lg-3 col-sm-5 hidden-xs float-right-style">
+                        <div class="categories-menu mrg-xs">
+                            <div class="category-heading">
+                               <h3>Каталог</h3>
+                            </div>
+                            <div class="category-menu-list">
+                                {% for cat,structure in cat|tree_info %}
+                                    {% if structure.new_level %}
+                                        <ul>
+                                            <li class="dropdown">
+                                                {% else %}
+                                            </li>
+                                            <li>
+                                                {% endif %}
+                                                    <a href="{% url 'catalog' cat.slug %}">{{ cat.title }}</a>
+                                                {% for level in structure.closed_levels %}
+                                            </li>
+                                        </ul>
+                                                {% endfor %}
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-md-3 col-lg-3 hidden-md hidden-lg hidden-sm ">
+                        <div class="category-menu">
+                            <div class="category-menu-box">
+                                <div class="category-heading">
+                                   <h3 class="dropdown">Просмотр Каталога</h3>
+                                </div>
+                                <div id="category-menu-mobile"  class="category-menu-mobile">
+                                    {% for cat,structure in cat|tree_info %}
+                                        {% if structure.new_level %}
+                                            <ul>
+                                                <li class="dropdown-mobile">
+                                                    {% else %}
+                                                </li>
+                                                <li>
+                                                    {% endif %}
+                                                        <a class="cl" href="{% url 'catalog' cat.slug %}">{{ cat.title }}</a>
+                                                    {% for level in structure.closed_levels %}
+                                                </li>
+                                            </ul>
+                                                    {% endfor %}
+                                    {% endfor %}
+                                </div>
+                            </div>                 
+                        </div>
+                    </div>  
+                    <div class="col-md-9 col-lg-9 col-sm-7 hidden-xs">
+                        <div class="row">
+                            <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                                <div class="producy__view__container">
+                                    <!-- Start Short Form -->
+                                    <div class="product__list__option">
+                                        <div class="order-single-btn">
+                                            <form action="/filter/"  method="get" name="{{ category_get.slug }}" id="filter">
+                                                <select class="select-color selectpicker" id="select-filter" select name='f'>
+                                                  <option disabled selected>Фильтр по напряжению</option>
+                                                {% for filter_obj in catalog_filter %}
+                                                  <option value="{{ filter_obj.slug }}" name="f">{{ filter_obj.title }}</option>
+                                                {% endfor %}     
+                                                </select>
+                                            </form>
+                                        </div>
+                                    </div>
+                                    <!-- End Short Form -->
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="shop__grid__view__wrap another-product-style">
+                                <!-- Start Single View -->
+                                <div role="tabpanel" id="grid-view" class="single-grid-view tab-pane fade in active clearfix">
+                                    {% for product in product %}
+                                        <!-- Start Single Product -->
+                                        <div class="col-md-4 col-lg-4 col-sm-4 col-xs-12">
+                                            <div class="product">
+                                                <div class="product__inner">
+                                                    <div class="pro__thumb">
+                                                        <a href="{% url 'product' product.slug %}">
+                                                            <img src="{{ product.image.url }}" alt="product images">
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                                <div class="product__details">
+                                                    <h2><a href="{% url 'product' product.slug %}">{{ product.title }}</a></h2>
+                                                    <ul class="product__price">
+                                                        <li class="old__price">&#8381;{{ product.discount_price }}</li>
+                                                        <li class="new__price">&#8381;{{ product.price }}</li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div> 
+                                    {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- End Our ShopSide Area -->
+{% endblock %}

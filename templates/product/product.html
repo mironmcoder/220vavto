@@ -1,0 +1,192 @@
+{% extends "base.html" %}
+{% load mptt_tags %}
+{% load static %}
+{% block title %}<title>{{ object.seo_title }}</title>{% endblock %}
+{% block page %}
+
+<section class="htc__product__details pt--100 pb--100 bg__white">
+    <div class="container">
+        <div class="scroll-active">
+            <div class="row">
+                <div class="col-md-6 col-lg-6 col-sm-5 col-xs-12">
+                    <div class="product__details__container product-details-5">
+                        <div class="product-gallery">
+                            <div class="slide-main">
+                                <img class="img-thumbnail img-reset" id="slide-main" src="{{ object.image.url }}">
+                            </div>
+                            <div class="slide-thumb">
+                                    <div class="slide-thumb-item">
+                                        <img class="img-thumbnail img-reset" id="slide-thumb" src="{{ object.image.url }}">
+                                    </div>
+                                {% for image_item in object.images_set.all %}
+                                    <div class="slide-thumb-item">
+                                        <img class="img-thumbnail img-reset" id="slide-thumb" src="{{ image_item.img.url }}">
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    	
+                    </div>
+                </div>
+                <div class="sidebar-active col-md-6 col-lg-6 col-sm-7 col-xs-12 xmt-30">
+                    <div class="htc__product__details__inner ">
+                        <div class="pro__detl__title">
+                            <h2>{{ object.title }}</h2>
+                        </div>
+                        <div class="pro__details">
+                        	{% autoescape off %}
+                            	<p> {{ object.short_description }} </p>
+                            {% endautoescape %}
+                        </div>
+                        {% if object.in_stock %}
+                            <div class="in_stock">
+                                <i class="far fa-check-circle"></i>
+                                В ниличии
+
+                            </div>
+                        {% else %}
+                            <div class="in_stock">
+                                <i class="far fa-check-circle clr"></i>
+                                Под заказ
+                            </div>
+                        {% endif %}
+                        <ul class="pro__dtl__prize">
+                            <li class="old__prize">&#8381;{{ object.discount_price }}</li>
+                            <li>&#8381;{{ object.price }}</li>
+                        </ul>
+                        <div class="product-action-wrap">
+                            <form id='myform' action="{% url "basket:basket_add" object.pk %}" method="post"">
+		                        {{ basket_product_form }}
+							    {% csrf_token %}
+							    <button type="submit" class="buy__now__btn">В корзину</button>
+							</form>
+                        </div>
+                        	
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- End Product Details -->
+<!-- Start Product tab -->
+<section class="htc__product__details__tab bg__white pb--120">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                <ul class="product__deatils__tab mb--60" role="tablist">
+                    <li role="presentation" class="active">
+                        <a href="#description" role="tab" data-toggle="tab">Описание</a>
+                    </li>
+                    <li role="presentation">
+                        <a href="#sheet" role="tab" data-toggle="tab">Характеристики</a>
+                    </li>
+                    <li role="presentation">
+                        <a href="#reviews" role="tab" data-toggle="tab">Отзывы</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="product__details__tab__content">
+                    <!-- Start Single Content -->
+                    <div role="tabpanel" id="description" class="product__tab__content fade in active">
+                        <div class="product__description__wrap">
+                            {% autoescape off %}
+                                <p> {{ object.description }} </p>
+                            {% endautoescape %}
+                            {% for image_item in object.imagesbottom_set.all %}
+                                <img class="img-thumbnail img-reset" id="slide-thumb" src="{{ image_item.img.url }}">
+                            {% endfor %}
+                        </div>
+                    </div>
+                    <!-- End Single Content -->
+                    <!-- Start Single Content -->
+                    <div role="tabpanel" id="sheet" class="product__tab__content fade">
+                        <div class="pro__feature">
+                            {% autoescape off %}
+                                <p> {{ object.short_description }} </p>
+                            {% endautoescape %}
+
+                            {% autoescape off %}
+                                <p> {{ object.bottom_description }} </p>
+                            {% endautoescape %}
+
+                        </div>
+                    </div>
+                    <!-- End Single Content -->
+                    <!-- Start Single Content -->
+                    <div role="tabpanel" id="reviews" class="product__tab__content fade">
+
+                            <h1 class="reviews-h">Оставьте ваш отзыв!</h1>
+                            <form action="{% url 'reviews' %}" method="post" class="reviews-form-main" parent="0" product="{{ object.pk }}">
+                                <div class="form-row">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="parent" id="contactparent" value="">
+                                    <div class="form-group col-md-6">
+                                        <label for="inputName">Имя</label>
+                                        {{ review_form.username }}
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label for="inputEmail4">Email</label>
+                                        {{ review_form.email }}
+                                    </div>
+                                    <div class="form-group col-md-12">
+                                        <label for="exampleFormControlTextarea1">Комментарий</label>
+                                        <div class="reply-comment"><a id="reply" href="">Ответить пользователю Admin X</a> </div>
+                                        {{ review_form.comment }}
+                                    </div>
+                                    <div class="captcha-box">
+                                        {{ review_form.captcha }}
+                                    </div>
+                                    <button type="submit" id="review-submit" class="btn btn-primary">Ответить</button>
+                                </div>
+                            </form>
+
+                            <div id="modal-msg" class="modalbackground">
+                                <div class="modalwindow">
+                                    <h3></h3>
+                                    <p></p>
+                                    <a id="modal-btn" href=" ">Закрыть</a>
+                                </div>
+                            </div>
+                            <div class="review__address__inner">
+                                <!-- Start Single Review -->
+                            {% for review in productcart.get_review %}
+
+                            {% if review.level > 0 %}
+                                <div class="pro__review ans">
+                            {% else %}
+                                <div class="pro__review">
+                            {% endif %}
+                                    <div class="review__thumb">
+                                        <img src="{% static "media/images/user-profile-picture.png" %}" alt="review images">
+                                    </div>
+                                    <div class="review__details">
+                                        <div class="review__info">
+                                            <h4><a href="#">{{ review.username }}</a></h4>
+                                            <div class="rating__send" parent="{{ review.id }}" name="{{ review.username }}">
+                                                <a href=""><i class="zmdi zmdi-mail-reply"></i></a>
+                                            </div>
+                                        </div>
+                                        <div class="review__date">
+                                            <span>{{ review.created }}</span>
+                                            <span>{% if review.level > 0 %}Ответ на отзыв: {{ review.parent.username }}{% endif %}</span>
+                                        </div>
+                                        <p>{{ review.comment }}</p>
+                                    </div>
+                                </div>
+                                <!-- End Single Review -->
+                                <!-- Start Single Review -->
+                            {% endfor %}
+            <!-- End Single Content -->
+        </div>
+    </div>
+</section>
+        <!-- End Product tab -->
+
+{% endblock %}
+
+
+

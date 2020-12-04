@@ -1,0 +1,83 @@
+{% extends "base.html" %}
+{% load static %}
+{% block page %}
+<!-- Start Bradcaump area -->
+        <div class="ht__bradcaump__area" style="background: rgba(0, 0, 0, 0) url({% static 'images/bg/2.jpg' %}) no-repeat scroll center center / cover ;">
+            <div class="ht__bradcaump__wrap">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <div class="bradcaump__inner text-center">
+                                <h2 class="bradcaump-title">Оформление заказа</h2>
+                                <nav class="bradcaump-inner">
+                                  <a class="breadcrumb-item" href="/">Домой</a>
+                                  <span class="brd-separetor">/</span>
+                                  <span class="breadcrumb-item active">Оформление</span>
+                                </nav>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- End Bradcaump area -->
+        <!-- Start Checkout Area -->
+        <section class="our-checkout-area ptb--120 bg__white">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-8 col-lg-8">
+                        <div class="ckeckout-left-sidebar">
+                            <!-- Start Checkbox Area -->
+                            <div class="checkout-form">
+                                <h2 class="section-title-3">Заполните данные</h2>
+                                {{ form.non_field_errors }}
+                                <div class="checkout-form-inner">
+                                  <form action="." method="post" class="order-form">
+                                    <div class="single-checkout-box">
+                                        {{ form.subject.errors }}
+                                        {{ form.name }}
+                                        {{ form.phone }}
+                                    </div>
+                                    <div class="single-checkout-box">
+                                        {{ form.subject.errors }}
+                                        {{ form.address }}
+                                        {{ form.email }}
+                                    </div>
+                                    <div class="single-checkout-box">
+                                        {{ form.subject.errors }}
+                                        {{ form.comment }}
+                                    </div>
+                                    <button type="submit" class="btn-chek">Оформить заказ</button>
+                                        {% csrf_token %}
+                                </form>
+                              </div>
+                            </div>
+                            <!-- End Checkbox Area -->
+                            
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-lg-4">
+                        <div class="checkout-right-sidebar">
+                            <div class="our-important-note">
+                                <h2 class="section-title-3">Информация</h2>
+                                <p class="note-desc">Lorem ipsum dolor sit amet, consectetur adipisici elit, sed do eiusmod tempor incididunt ut laborekf et dolore magna aliqua.</p>
+                                <ul class="important-note">
+                                    <li><a href="#"><i class="zmdi zmdi-caret-right-circle"></i>Lorem ipsum dolor sit amet, consectetur nipabali</a></li>
+                                    <li><a href="#"><i class="zmdi zmdi-caret-right-circle"></i>Lorem ipsum dolor sit amet</a></li>
+                                    <li><a href="#"><i class="zmdi zmdi-caret-right-circle"></i>Lorem ipsum dolor sit amet, consectetur nipabali</a></li>
+                                    <li><a href="#"><i class="zmdi zmdi-caret-right-circle"></i>Lorem ipsum dolor sit amet, consectetur nipabali</a></li>
+                                    <li><a href="#"><i class="zmdi zmdi-caret-right-circle"></i>Lorem ipsum dolor sit amet</a></li>
+                                </ul>
+                            </div>
+                            <div class="puick-contact-area mt--60">
+                                <h2 class="section-title-3">Позвоните нам</h2>
+                                <a href="phone:+8801722889963">+012 345 678 102 </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- End Checkout Area -->
+
+{% endblock %}
