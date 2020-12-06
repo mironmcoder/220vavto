@@ -11,6 +11,10 @@ class IndexListView(ListView):
 	template_name = 'index.html'
 
 def contact(request):
+	form = ContactForm()
+	return render(request, 'contact.html', {'form':form})
+
+def contact_send(request):
 	if request.method == 'POST':
 		form = ContactForm(request.POST)
 		if form.is_valid():
@@ -28,19 +32,9 @@ def contact(request):
 				html_message = message
 			)
 			if send:
-				return redirect('thanks')
-			else:
-				return redirect('error')
-			
-	else:
-		form = ContactForm()
-	return render(request, 'contact.html', {'form':form})
-
-def contact_error(request):
-	return render(request, 'contact_error.html')
-
-def contact_thanks(request):
-	return render(request, 'contact_thanks.html')
+				return HttpResponse(status=201)
+		else:
+			return HttpResponse(status=404)
 
 def help(request):
 	return render(request, 'help.html')

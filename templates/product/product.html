@@ -118,31 +118,31 @@
                     <!-- End Single Content -->
                     <!-- Start Single Content -->
                     <div role="tabpanel" id="reviews" class="product__tab__content fade">
-
-                            <h1 class="reviews-h">Оставьте ваш отзыв!</h1>
-                            <form action="{% url 'reviews' %}" method="post" class="reviews-form-main" parent="0" product="{{ object.pk }}">
-                                <div class="form-row">
+                            <div class="reviews-form-wrap">
+                                <h1 class="reviews-h">Оставьте ваш отзыв!</h1>
+                                <div class="reply-comment"><a id="reply" href="">Ответить пользователю Admin X</a> </div>
+                                <form action="{% url 'reviews' %}" method="post" class="reviews-form-main" parent="0" product="{{ object.pk }}">
                                     {% csrf_token %}
                                     <input type="hidden" name="parent" id="contactparent" value="">
-                                    <div class="form-group col-md-6">
-                                        <label for="inputName">Имя</label>
-                                        {{ review_form.username }}
+                                    <div class="single-reviews-form">
+                                        <div class="reviews-box">
+                                            {{ review_form.username }}
+                                            {{ review_form.email }}
+                                        </div>
                                     </div>
-                                    <div class="form-group col-md-6">
-                                        <label for="inputEmail4">Email</label>
-                                        {{ review_form.email }}
-                                    </div>
-                                    <div class="form-group col-md-12">
-                                        <label for="exampleFormControlTextarea1">Комментарий</label>
-                                        <div class="reply-comment"><a id="reply" href="">Ответить пользователю Admin X</a> </div>
-                                        {{ review_form.comment }}
+                                    <div class="single-reviews-form">
+                                        <div class="reviews-box message">
+                                            {{ review_form.comment }}
+                                        </div>
                                     </div>
                                     <div class="captcha-box">
                                         {{ review_form.captcha }}
                                     </div>
-                                    <button type="submit" id="review-submit" class="btn btn-primary">Ответить</button>
-                                </div>
-                            </form>
+                                    <div class="contact-btn">                             
+                                        <button type="submit" class="fv-btn">Отправить</button>
+                                    </div>  
+                                </form>
+                            </div>
 
                             <div id="modal-msg" class="modalbackground">
                                 <div class="modalwindow">
@@ -177,8 +177,6 @@
                                         <p>{{ review.comment }}</p>
                                     </div>
                                 </div>
-                                <!-- End Single Review -->
-                                <!-- Start Single Review -->
                             {% endfor %}
             <!-- End Single Content -->
         </div>

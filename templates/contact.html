@@ -66,57 +66,55 @@
                                 </div>
                             </div>
                             <div class="contact-form-wrap">
-                            <div class="contact-title">
-                                <h2 class="contact__title">Напишите нам</h2>
-                            </div>
-                            <form id="contact-form" action="mail.php" method="post">
-                                <div class="single-contact-form">
-                                    <div class="contact-box name">
-                                        <input type="text" name="name" placeholder="Your Nme*">
-                                        <input type="email" name="email" placeholder="Mail*">
+                                <div class="contact-title">
+                                    <h2 class="contact__title">Напишите нам</h2>
+                                </div>
+                                <form id="contact-form" action="{% url 'contact_send' %}" method="post">
+                                    {% csrf_token %}
+                                    {{ form.non_field_errors }}
+                                    <div class="single-contact-form">
+                                        <div class="contact-box name">
+                                            {{ form.name.errors }}
+                                            {{ form.name }}
+                                            {{ form.sender.errors }}
+                                            {{ form.sender }}
+                                            {{ form.phone }}
+                                            {{ form.phone.errors }}
+                                        </div>
+                                    </div>
+                                    <div class="single-contact-form">
+                                        <div class="contact-box message">
+                                            {{ form.message.errors }}
+                                            {{ form.message }}
+                                        </div>
+                                    </div>
+                                    <div class="captcha-box">
+                                        {{ form.captcha }}
+                                    </div>
+                                    <div class="contact-btn">                             
+                                        <button type="submit" class="fv-btn">Отправить</button>
+                                    </div>  
+                                </form>
+                                <div id="modal-msg" class="modalbackground">
+                                    <div class="modalwindow">
+                                        <h3></h3>
+                                        <p></p>
+                                        <a id="modal-btn" href=" ">Закрыть</a>
                                     </div>
                                 </div>
-                                <div class="single-contact-form">
-                                    <div class="contact-box subject">
-                                        <input type="text" name="subject" placeholder="Subject*">
-                                    </div>
-                                </div>
-                                <div class="single-contact-form">
-                                    <div class="contact-box message">
-                                        <textarea name="message"  placeholder="Massage*"></textarea>
-                                    </div>
-                                </div>
-                                <div class="contact-btn">
-                                    <button type="submit" class="fv-btn">SEND</button>
-                                </div>
-                            </form>
                         </div> 
-                        <div class="form-output">
-                            <p class="form-messege"></p>
-                        </div>
-                        </div>
-                    </div>
+                     </div>
+                </div>
                     <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12 smt-30 xmt-30">
                         <div class="map-contacts">
-                            <div id="googleMap"></div>
+                            <h2 class="contact__title">Местоположение на карте</h2>
+                            <div id="googleMap">
+                                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d180375.94754788736!2d38.85758805510773!3d45.057918412102886!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x40f04564714535b3%3A0xf720794f56c4beb6!2z0JrRgNCw0YHQvdC-0LTQsNGALCDQmtGA0LDRgdC90L7QtNCw0YDRgdC60LjQuSDQutGA0LDQuQ!5e0!3m2!1sru!2sru!4v1607240008814!5m2!1sru!2sru" width="100%" height="100%" frameborder="0" style="border:0;" allowfullscreen="" aria-hidden="false" tabindex="0"></iframe>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
-        <!-- End Contact Area -->
-
-	    <!-- jquery latest version -->
-	    <script src="{% static "vendor/jquery-1.12.0.min.js" %}"></script>
-	    <!-- Bootstrap framework js -->
-	    <script src="{% static "bootstrap.min.js" %}"></script>
-	    <!-- All js plugins included in this file. -->
-	    <script src="{% static "plugins.js" %}"></script>
-	    <script src="{% static "slick.min.js" %}"></script>
-	    <script src="{% static "owl.carousel.min.js" %}"></script>
-	    <!-- Waypoints.min.js. -->
-	    <script src="{% static "waypoints.min.js" %}"></script>
-	    <!-- Main js file that contents all jQuery plugins activation. -->
-	    <script src="{% static "main.js" %}"></script>
 
 {% endblock %}

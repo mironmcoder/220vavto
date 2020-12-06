@@ -62,13 +62,15 @@ $(document).ready(function () {
              success: function (data) {
                 console.log("OK");
                 $("#modal-msg").css("opacity","1").css("pointer-events","auto");
-                $(".modalwindow h3").text('Комментарий успешно отправлен!');
+                $(".modalwindow h3").text('Комментарий успешно отправлен!').css("color", "#008000");
                 $(".modalwindow p").text('Комментарий будет опубликован в ближайшее время')
+
+                $(".reviews-form-main input, .reviews-form-main textarea").val('');
              },
              error: function(){
-                 console.log("error")
+                console.log("error")
                 $("#modal-msg").css("opacity","1").css("pointer-events","auto");
-                $(".modalwindow h3").text('Возникла непредвиденная ошибка!');
+                $(".modalwindow h3").text('Возникла непредвиденная ошибка!').css("color", "#FF0000");
                 $(".modalwindow p").text('Проверьте введённые данные, или попробуйте снова')
              }
          })

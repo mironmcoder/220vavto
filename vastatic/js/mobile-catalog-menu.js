@@ -11,7 +11,7 @@ $(document).ready(function(){
 
 	$(".parrent>ul").addClass("child")
 
-	$(".parrent").append('<a class="expand" href="#">+</a>');
+	$(".parrent").append('<a class="expand" href="#"><i class="fas fa-sort-down"></i></a>');
 
 	//$(".parrent>a").addClass("pr");
 

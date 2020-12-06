@@ -2686,6 +2686,11 @@ $(function() {
   // Get the messages div.
   var formMessages = $('.form-messege');
 
+  $("#modal-btn").click(function(e){
+    e.preventDefault();
+    $("#modal-msg").css("opacity","0").css("pointer-events","none");
+  });
+
   // Set up an event listener for the contact form.
   $(form).submit(function(e) {
     // Stop the browser from submitting the form.
@@ -2696,33 +2701,25 @@ $(function() {
 
     // Submit the form using AJAX.
     $.ajax({
-      type: 'POST',
-      url: $(form).attr('action'),
-      data: formData
-    })
-    .done(function(response) {
-      // Make sure that the formMessages div has the 'success' class.
-      $(formMessages).removeClass('error');
-      $(formMessages).addClass('success');
-
-      // Set the message text.
-      $(formMessages).text(response);
-
-      // Clear the form.
-      $('#contact-form input,#contact-form textarea').val('');
-    })
-    .fail(function(data) {
-      // Make sure that the formMessages div has the 'error' class.
-      $(formMessages).removeClass('success');
-      $(formMessages).addClass('error');
-
-      // Set the message text.
-      if (data.responseText !== '') {
-        $(formMessages).text(data.responseText);
-      } else {
-        $(formMessages).text('Oops! An error occured and your message could not be sent.');
-      }
-    });
+       url: $(form).attr('action'), 
+       type: 'POST',
+       data: formData,
+       cache: true,
+       success: function (data) {
+          console.log("OK");
+          $("#modal-msg").css("opacity","1").css("pointer-events","auto");
+          $(".modalwindow h3").text('Сообщение успешно отправлено. Спасибо вам!').css("color", "#008000");
+          $(".modalwindow p").text('В ближайшее время вы получите ответ')
+          // Clear the form.
+          $('#contact-form input,#contact-form textarea').val('');
+       },
+       error: function(){
+          console.log("error")
+          $("#modal-msg").css("opacity","1").css("pointer-events","auto");
+          $(".modalwindow h3").text('Возникла непредвиденная ошибка!').css("color", "#FF0000");
+          $(".modalwindow p").text('Проверьте введённые данные, или попробуйте снова')
+       }
+   })
   });
 
 });
